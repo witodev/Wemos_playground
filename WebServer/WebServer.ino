@@ -43,12 +43,24 @@ ESP8266WebServer server(80);
 /* Just a little test message.  Go to http://192.168.4.1 in a web browser
 * connected to this access point to see it.
 */
+
+void blink()
+{
+	digitalWrite(LED_BUILTIN, LOW);
+	delay(500);
+	digitalWrite(LED_BUILTIN, HIGH);
+}
+
 void handleRoot() {
+	Serial.println("New client");
 	server.send(200, "text/html", "<h1>You are connected</h1>");
+	blink();
 }
 
 void setup() {
 	delay(1000);
+	pinMode(LED_BUILTIN, OUTPUT);
+	digitalWrite(LED_BUILTIN, HIGH);
 	Serial.begin(115200);
 	Serial.println();
 	Serial.print("Configuring access point...");
