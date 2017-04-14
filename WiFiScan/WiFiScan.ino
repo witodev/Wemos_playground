@@ -63,7 +63,7 @@ void loop() {
 	Serial.println("");
 	// Wait a bit before scanning again
 	delete[] networks;
-	delay(5000);
+	delay(10000);
 }
 
 // base on http://forum.arduino.cc/index.php?topic=38025.0
