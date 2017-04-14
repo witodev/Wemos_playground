@@ -33,8 +33,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-const char *ssid = "YourSSIDHere";
-const char *password = "YourPSKHere";
+const char *ssid = "YourSSIDHere"; // put your ssid
+const char *password = "YourPSKHere"; // put you password
 
 ESP8266WebServer server(80);
 
