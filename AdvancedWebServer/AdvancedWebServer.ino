@@ -58,7 +58,7 @@ void handleRoot() {
     </style>\
   </head>\
   <body>\
-    <h1>Hello from ESP8266!</h1>\
+    <h1>Hello from HackerSpace!</h1>\
     <p>Uptime: %02d:%02d:%02d</p>\
     <img src=\"/test.svg\" />\
   </body>\
