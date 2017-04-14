@@ -36,7 +36,7 @@
 
 /* Set these to your desired credentials. */
 const char *ssid = "HackerSpace";
-const char *password = "thereisnospoon";
+const char *password = "12345678";
 
 ESP8266WebServer server(80);
 
