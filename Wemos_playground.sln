@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WiFiScan", "WiFiScan\WiFiSc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MQTT", "MQTT\MQTT.vcxproj", "{DAC77D88-D497-4325-A241-1A58FE45A625}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdvancedWebServer", "AdvancedWebServer\AdvancedWebServer.vcxproj", "{A17A0AD9-6AAA-48AC-833C-F5C855050046}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -33,6 +35,10 @@ Global
 		{DAC77D88-D497-4325-A241-1A58FE45A625}.Debug|x86.Build.0 = Debug|Win32
 		{DAC77D88-D497-4325-A241-1A58FE45A625}.Release|x86.ActiveCfg = Release|Win32
 		{DAC77D88-D497-4325-A241-1A58FE45A625}.Release|x86.Build.0 = Release|Win32
+		{A17A0AD9-6AAA-48AC-833C-F5C855050046}.Debug|x86.ActiveCfg = Debug|Win32
+		{A17A0AD9-6AAA-48AC-833C-F5C855050046}.Debug|x86.Build.0 = Debug|Win32
+		{A17A0AD9-6AAA-48AC-833C-F5C855050046}.Release|x86.ActiveCfg = Release|Win32
+		{A17A0AD9-6AAA-48AC-833C-F5C855050046}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
