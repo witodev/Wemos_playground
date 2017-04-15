@@ -11,7 +11,7 @@ const char* password = "";
 
 bool sendTemp = true;
 ulong start = millis();
-ulong sleep = 5;
+ulong sleep = 10;
 
 struct DS18B20
 {
@@ -224,9 +224,11 @@ void loop()
 			Serial.print("Temp = ");
 			Serial.println(result.temp);
 		}
-		Serial.println("Going deep sleep...");
 		ulong  b = 5 * 1e6 - millis();
-		//ESP.deepSleep();
+		Serial.print("Going deep sleep ");
+		Serial.println(b);
+
+		ESP.deepSleep(b);
 		delay(1000);
 	}
 
