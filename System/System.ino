@@ -4,17 +4,18 @@
 //const char* ssid = "...";
 //const char* password = "...";
 
+bool sendTemp = true;
 
 bool ConnectToKnownNetwork()
 {
 	WiFi.begin(ssid, password);
-	//Serial.println("");
+	Serial.println("");
 
 	// Wait for connection
 	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
 		//Serial.print(".");
-		Serial.print("> ");
+		Serial.print("> IP: ");
 		Serial.println(WiFi.localIP());
 	}
 
@@ -51,8 +52,13 @@ void loop()
 	{
 		OTA.loop();
 	}
-	else
+	else if (sendTemp)
 	{
-		yield();
+		Serial.println("Tutaj bedziemy pobierac temperature i wysylac ja przez MQTT do Node-RED");
+		Serial.println("No a pozniej pojdziemy spac...");
+		//ESP.deepSleep();
+		delay(1000);
 	}
+
+	yield();
 }
