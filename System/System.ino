@@ -224,12 +224,13 @@ void loop()
 			Serial.print("Temp = ");
 			Serial.println(result.temp);
 		}
-		ulong  b = 5 * 1e6 - millis();
+
+		ulong  b = sleep * 1e6 - millis();
 		Serial.print("Going deep sleep ");
 		Serial.println(b);
 
 		ESP.deepSleep(b);
-		delay(1000);
+		delay(100);
 	}
 
 	yield();
