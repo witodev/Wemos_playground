@@ -5,9 +5,9 @@
 #include "OTA.h"
 
 void OTAClass::init()
-{
+{			
 	// Port defaults to 8266
-	// ArduinoOTA.setPort(8266);
+	 ArduinoOTA.setPort(8266);
 
 	// Hostname defaults to esp8266-[ChipID]
 	// ArduinoOTA.setHostname("myesp8266");
@@ -33,10 +33,7 @@ void OTAClass::init()
 		else if (error == OTA_END_ERROR) Serial.println("End Failed");
 	});
 	ArduinoOTA.begin();
-	Serial.println("Ready");
-	Serial.print("IP address: ");
-	Serial.println(WiFi.localIP());
-
+	Serial.println("> OTA Configured");
 }
 
 void OTAClass::loop()
@@ -46,7 +43,22 @@ void OTAClass::loop()
 
 bool OTAClass::check()
 {
-	return true;
+	bool net = true;
+	if (net)
+	{
+		Serial.println("> OTA Enabled");
+		digitalWrite(LED_BUILTIN, LOW);
+		delay(100);
+		enabled = true;
+	}
+	else
+	{
+		Serial.println("> OTA Disabled");
+		digitalWrite(LED_BUILTIN, HIGH);
+		delay(100);
+		enabled = false;
+	}
+	return net;
 }
 
 

@@ -88,7 +88,15 @@
   <ItemGroup>
     <ClCompile Include="OTA.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="board.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties arduino.upload.port="192.168.1.36" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
