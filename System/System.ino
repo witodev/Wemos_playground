@@ -232,7 +232,8 @@ bool SendToRPi(DS18B20 &result)
 	while (client.available()) {
 		line = client.readStringUntil('\r');
 	}
-	
+	client.stop();
+
 	Serial.print("SendToRPi: ");
 	Serial.println(line);
 
@@ -285,6 +286,4 @@ void loop()
 		ESP.deepSleep(b);
 		delay(100);
 	}
-
-	yield();
 }
