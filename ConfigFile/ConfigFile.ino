@@ -11,7 +11,7 @@
 #include "FS.h"
 
 bool loadConfig() {
-	File configFile = SPIFFS.open("/config.json", "r");
+	File configFile = SPIFFS.open("/data.json", "r");
 	if (!configFile) {
 		Serial.println("Failed to open config file");
 		return false;
@@ -44,6 +44,13 @@ bool loadConfig() {
 
 	// Real world application would store these values in some variables for
 	// later use.
+	configFile.seek(0, SeekSet);
+	String txt = configFile.readString();
+
+	Serial.println();
+	Serial.println("Raw file:");
+	Serial.println(txt);
+	Serial.println();
 
 	Serial.print("Loaded serverName: ");
 	Serial.println(serverName);
@@ -58,7 +65,7 @@ bool saveConfig() {
 	json["ssid"] = "api.example.com";
 	json["password"] = "128du9as8du12eoue8da98h123ueh9h98";
 
-	File configFile = SPIFFS.open("/config.json", "w");
+	File configFile = SPIFFS.open("/data.json", "w");
 	if (!configFile) {
 		Serial.println("Failed to open config file for writing");
 		return false;
