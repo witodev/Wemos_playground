@@ -1,10 +1,9 @@
 
 #include "OTA.h"
 
-const char* ssid = "...";
-const char* password = "...";
+//const char* ssid = "...";
+//const char* password = "...";
 
-bool otaUpdate = false;
 
 bool ConnectToKnownNetwork()
 {
@@ -15,14 +14,14 @@ bool ConnectToKnownNetwork()
 	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
 		//Serial.print(".");
-		Serial.print("IP address: ");
+		Serial.print("> ");
 		Serial.println(WiFi.localIP());
 	}
 
 	Serial.println("");
-	Serial.print("Connected to ");
+	Serial.print("> Connected to ");
 	Serial.println(ssid);
-	Serial.print("IP address: ");
+	Serial.print("> IP address: ");
 	Serial.println(WiFi.localIP());
 
 	return true;

@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OTA", "OTA\OTA.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcxproj", "{3DF78408-90B9-4C39-B269-2996E3C9CA49}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WiFiClient", "WiFiClient\WiFiClient.vcxproj", "{D10DEC3F-7B20-4B57-9209-89C739D15976}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -51,6 +53,10 @@ Global
 		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Debug|x86.Build.0 = Debug|Win32
 		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Release|x86.ActiveCfg = Release|Win32
 		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Release|x86.Build.0 = Release|Win32
+		{D10DEC3F-7B20-4B57-9209-89C739D15976}.Debug|x86.ActiveCfg = Debug|Win32
+		{D10DEC3F-7B20-4B57-9209-89C739D15976}.Debug|x86.Build.0 = Debug|Win32
+		{D10DEC3F-7B20-4B57-9209-89C739D15976}.Release|x86.ActiveCfg = Release|Win32
+		{D10DEC3F-7B20-4B57-9209-89C739D15976}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
