@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdvancedWebServer", "Advanc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OTA", "OTA\OTA.vcxproj", "{5EA4020A-1B12-47B6-810E-03F91F05EC68}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcxproj", "{3DF78408-90B9-4C39-B269-2996E3C9CA49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -45,6 +47,10 @@ Global
 		{5EA4020A-1B12-47B6-810E-03F91F05EC68}.Debug|x86.Build.0 = Debug|Win32
 		{5EA4020A-1B12-47B6-810E-03F91F05EC68}.Release|x86.ActiveCfg = Release|Win32
 		{5EA4020A-1B12-47B6-810E-03F91F05EC68}.Release|x86.Build.0 = Release|Win32
+		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Debug|x86.ActiveCfg = Debug|Win32
+		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Debug|x86.Build.0 = Debug|Win32
+		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Release|x86.ActiveCfg = Release|Win32
+		{3DF78408-90B9-4C39-B269-2996E3C9CA49}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
