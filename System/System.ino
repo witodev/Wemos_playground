@@ -20,6 +20,7 @@ struct DS18B20
 };
 
 bool ReadTemp(DS18B20 &result);
+void SendToRPi(DS18B20 &result);
 
 bool loadConfig() {
 	File configFile = SPIFFS.open("/config.json", "r");
@@ -189,6 +190,11 @@ bool ReadTemp(DS18B20 &result)
 		return true;
 }
 
+void SendToRPi(DS18B20 &result)
+{
+
+}
+
 void setup() 
 {
 	Serial.begin(115200);
@@ -223,6 +229,9 @@ void loop()
 			Serial.println(result.addr);
 			Serial.print("Temp = ");
 			Serial.println(result.temp);
+
+			// TODO: send temperature to RPi
+			SendToRPi(result);
 		}
 
 		ulong  b = sleep * 1e6 - millis();
