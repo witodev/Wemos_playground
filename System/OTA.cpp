@@ -22,7 +22,7 @@ void OTAClass::init()
 		Serial.println("\nEnd");
 	});
 	ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-		Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+		Serial.printf("Progress: %u%%\n\r", (progress / (total / 100)));
 	});
 	ArduinoOTA.onError([](ota_error_t error) {
 		Serial.printf("Error[%u]: ", error);
@@ -43,21 +43,36 @@ void OTAClass::loop()
 
 bool OTAClass::check()
 {
-	bool net = true;
-	if (net)
-	{
-		Serial.println("> OTA Enabled");
-		digitalWrite(LED_BUILTIN, LOW);
-		delay(100);
-		enabled = true;
-	}
-	else
-	{
-		Serial.println("> OTA Disabled");
-		digitalWrite(LED_BUILTIN, HIGH);
-		delay(100);
-		enabled = false;
-	}
+	// zakladamy ze juz jestesmy polaczeni do sieci
+	// teraz do sprawdzimy czy trzeba robic update, zmienna net
+	
+	String dev = WiFi.hostname();
+	Serial.print("> OTA device: ");
+	Serial.println(dev);
+	
+	bool net = true; // tutaj trzeba polaczyc sie z raspberry pi i sprawdzic czy bedziemy updateowac to urzadzenie
+
+	Serial.print("> OTA ");
+	Serial.println((net ? "Enabled" : "Disabled"));
+	digitalWrite(LED_BUILTIN, (net ? LOW : HIGH));
+	delay(100);
+	enabled = net;
+
+	//if (net)
+	//{
+	//	Serial.println("> OTA Enabled");
+	//	digitalWrite(LED_BUILTIN, LOW);
+	//	delay(100);
+	//	enabled = true;
+	//}
+	//else
+	//{
+	//	Serial.println("> OTA Disabled");
+	//	digitalWrite(LED_BUILTIN, HIGH);
+	//	delay(100);
+	//	enabled = false;
+	//}
+
 	return net;
 }
 
