@@ -25,6 +25,8 @@ http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <FS.h>
+#include <ArduinoJson.h>
 
 // Update these with values suitable for your network.
 
@@ -46,7 +48,51 @@ void setup() {
 	client.setCallback(callback);
 }
 
+bool loadConfig() {
+	File configFile = SPIFFS.open("/config.json", "r");
+	if (!configFile) {
+		Serial.println("Failed to open config file");
+		return false;
+	}
+
+	size_t size = configFile.size();
+	if (size > 1024) {
+		Serial.println("Config file size is too large");
+		return false;
+	}
+	std::unique_ptr<char[]> buf(new char[size]);
+	configFile.readBytes(buf.get(), size);
+
+	StaticJsonBuffer<200> jsonBuffer;
+	JsonObject& json = jsonBuffer.parseObject(buf.get());
+
+	if (!json.success()) {
+		Serial.println("Failed to parse config file");
+		return false;
+	}
+
+	ssid = json["ssid"];
+	password = json["password"];
+
+	Serial.println();
+	Serial.print("> Config ssid: ");
+	Serial.println(ssid);
+	Serial.print("> Config password: ");
+	Serial.println(password);
+	return true;
+}
+
 void setup_wifi() {
+	
+	if (!SPIFFS.begin()) {
+		Serial.println("Failed to mount file system");
+		return;
+	}
+	if (!loadConfig())
+	{
+		Serial.println("Network SSID and password failed");
+		return;
+	}
 
 	delay(10);
 	// We start by connecting to a WiFi network
@@ -93,12 +139,12 @@ void reconnect() {
 	while (!client.connected()) {
 		Serial.print("Attempting MQTT connection...");
 		// Attempt to connect
-		if (client.connect("ESP8266Client")) {
+		if (client.connect("esp", "...", "...")) {
 			Serial.println("connected");
 			// Once connected, publish an announcement...
-			client.publish("outTopic", "hello world");
+			client.publish("event", "hello world");
 			// ... and resubscribe
-			client.subscribe("inTopic");
+			client.subscribe("event");
 		}
 		else {
 			Serial.print("failed, rc=");
@@ -124,6 +170,6 @@ void loop() {
 		snprintf(msg, 75, "hello world #%ld", value);
 		Serial.print("Publish message: ");
 		Serial.println(msg);
-		client.publish("outTopic", msg);
+		client.publish("event", msg);
 	}
 }
