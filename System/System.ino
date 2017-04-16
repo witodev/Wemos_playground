@@ -104,7 +104,7 @@ void reconnect(DS18B20 &result) {
 			// Once connected, publish an announcement...
 			client.publish("event", msg);
 			// ... and resubscribe
-			client.subscribe("event");
+			//client.subscribe("event");
 		}
 		else {
 			Serial.print("failed, rc=");
