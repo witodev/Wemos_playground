@@ -10,6 +10,17 @@
 #include <ArduinoJson.h>
 #include "FS.h"
 
+const char* ssid = "...";
+const char* pass = "...";
+
+char* Convert(const char* source)
+{
+	auto len = strlen(source);
+	auto buff = new char[len];
+	strcpy(buff, source);
+	return buff;
+}
+
 bool loadConfig() {
 	File configFile = SPIFFS.open("/data.json", "r");
 	if (!configFile) {
@@ -42,6 +53,13 @@ bool loadConfig() {
 	const char* serverName = json["ssid"];
 	const char* accessToken = json["password"];
 
+	char buff[100];
+	strcpy(buff, (const char*)json["ssid"]);
+	ssid = buff;
+	ssid = Convert(json["ssid"]);
+
+	pass = Convert(json["password"]);
+	
 	// Real world application would store these values in some variables for
 	// later use.
 	configFile.seek(0, SeekSet);
@@ -102,6 +120,10 @@ void setup() {
 	}
 	else {
 		Serial.println("Config loaded");
+		Serial.print("SSID: ");
+		Serial.println(ssid);
+		Serial.print("PASS: ");
+		Serial.println(pass);
 	}
 }
 

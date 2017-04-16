@@ -9,11 +9,11 @@
 
 OneWire  ds(D7);  // on pin 10 (a 4.7K resistor is necessary)
 
-const char* ssid = "";
-const char* password = "";
+const char* ssid;
+const char* password;
 const char* mqtt_server = "pizero";
-char NR_user[8];
-char NR_pass[8];
+const char* mqtt_user;
+const char* mqtt_pass;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -34,6 +34,14 @@ struct DS18B20
 bool ReadTemp(DS18B20 &result);
 bool SendToRPi(DS18B20 &result);
 void reconnect(DS18B20 &result);
+
+char* Convert(const char* source)
+{
+	auto len = 32;// strlen(source);
+	auto buff = new char[len];
+	strcpy(buff, source);
+	return buff;
+}
 
 void callback(char* topic, byte* payload, unsigned int length) {
 	Serial.print("Message arrived [");
@@ -59,18 +67,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect(DS18B20 &result) {
 	// Loop until we're reconnected
 	Serial.print("> MQTT user: ");
-	Serial.println(NR_user);
+	Serial.println(mqtt_user);
 	Serial.print("> MQTT pass: ");
-	Serial.println(NR_pass);
+	Serial.println(mqtt_pass);
 
 	String msg = "" + result.addr + " " + result.temp;
 
 	while (!client.connected()) {
 		Serial.print("Attempting MQTT connection...");
 		// Attempt to connect
-		if (client.connect("esp", NR_user, NR_pass)) {
+		if (client.connect("esp", mqtt_user, mqtt_pass)) {
 			Serial.println("connected");
-			Serial.println(msg);
 			// Once connected, publish an announcement...
 			client.publish("event", msg.c_str());
 			// ... and resubscribe
@@ -89,6 +96,14 @@ void setupMQTT()
 {
 	client.setServer(mqtt_server, 1883);
 	client.setCallback(callback);
+}
+
+void ShowConfig(const char* title, const char* value)
+{
+	Serial.print("> Config ");
+	Serial.print(title);
+	Serial.print(": ");
+	Serial.println(value);
 }
 
 bool loadConfig() {
@@ -114,26 +129,18 @@ bool loadConfig() {
 		return false;
 	}
 
-	ssid = json["ssid"];
-	password = json["password"];
+	ssid = Convert(json["ssid"]);
+	password = Convert(json["password"]);
 
-	const char* tmp1 = json["NR_user"];
-	strcpy(NR_user, (const char*)tmp1);
-	Serial.print("> NR_user: ");
-	Serial.print(NR_user);
-	Serial.println(".");
-
-	const char* tmp2 = json["NR_pass"];
-	strcpy(NR_pass, (const char*)tmp2);
-	Serial.print("> NR_pass: ");
-	Serial.print(NR_pass);
-	Serial.println(".");
+	mqtt_user = Convert(json["mqtt_user"]);
+	mqtt_pass = Convert(json["mqtt_pass"]);
 
 	Serial.println();
-	Serial.print("> Config ssid: ");
-	Serial.println(ssid);
-	Serial.print("> Config password: ");
-	Serial.println(password);
+	ShowConfig("ssid", ssid);
+	ShowConfig("pass", password);
+	ShowConfig("mqtt_user", mqtt_user);
+	ShowConfig("mqtt_pass", mqtt_pass);
+
 	return true;
 }
 
