@@ -73,7 +73,7 @@ void reconnect(DS18B20 &result) {
 
 	String msg = "" + result.addr + " " + result.temp;
 
-	while (!client.connected()) {
+	if (client.connected()) {
 		Serial.print("Attempting MQTT connection...");
 		// Attempt to connect
 		if (client.connect("esp", mqtt_user, mqtt_pass)) {
@@ -91,6 +91,11 @@ void reconnect(DS18B20 &result) {
 			delay(5000);
 		}
 	}
+	else
+	{
+		Serial.println("connection failed");
+	}
+
 }
 void setupMQTT()
 {
