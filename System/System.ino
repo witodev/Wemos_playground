@@ -25,10 +25,32 @@ bool sendTemp = true;
 ulong start = millis();
 ulong sleep = 55;
 
+#define SENSORDATA_JSON_SIZE (JSON_OBJECT_SIZE(2))
+
 struct DS18B20
 {
-	String addr;
+	const char* addr;
 	float temp;
+
+	bool deserialize(char* json)
+	{
+		StaticJsonBuffer<SENSORDATA_JSON_SIZE> jsonBuffer;
+		JsonObject& root = jsonBuffer.parseObject(json);
+		addr = (const char*)root["dev"];
+		temp = root["temp"];
+		return root.success();
+	}
+
+	char* serialize(size_t maxSize)
+	{
+		char* json = new char[maxSize];
+		StaticJsonBuffer<SENSORDATA_JSON_SIZE> jsonBuffer;
+		JsonObject& root = jsonBuffer.createObject();
+		root["dev"] = addr;
+		root["temp"] = temp;
+		root.printTo(json, maxSize);
+		return json;
+	}
 };
 
 bool ReadTemp(DS18B20 &result);
@@ -37,7 +59,7 @@ void reconnect(DS18B20 &result);
 
 char* Convert(const char* source)
 {
-	auto len = 32;// strlen(source);
+	auto len = 100;// strlen(source);
 	auto buff = new char[len];
 	strcpy(buff, source);
 	return buff;
@@ -65,21 +87,22 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 
 void reconnect(DS18B20 &result) {
-	// Loop until we're reconnected
-	Serial.print("> MQTT user: ");
-	Serial.println(mqtt_user);
-	Serial.print("> MQTT pass: ");
-	Serial.println(mqtt_pass);
+	 //Loop until we're reconnected
+	//Serial.print("> MQTT user: ");
+	//Serial.println(mqtt_user);
+	//Serial.print("> MQTT pass: ");
+	//Serial.println(mqtt_pass);
 
-	String msg = "" + result.addr + " " + result.temp;
+	//String msg = "" + String(result.addr) + " " + result.temp;
+	auto msg = result.serialize(100);
 
-	if (client.connected()) {
+	if (!client.connected()) {
 		Serial.print("Attempting MQTT connection...");
 		// Attempt to connect
 		if (client.connect("esp", mqtt_user, mqtt_pass)) {
 			Serial.println("connected");
 			// Once connected, publish an announcement...
-			client.publish("event", msg.c_str());
+			client.publish("event", msg);
 			// ... and resubscribe
 			client.subscribe("event");
 		}
@@ -277,7 +300,7 @@ bool ReadTemp(DS18B20 &result)
 		for (int j = 0; j < 8; j++)
 			sprintf(&buffer[2 * j], "%02X", addr[j]);
 
-		result.addr = String(buffer);
+		result.addr = Convert(buffer);
 		result.temp = celsius;
 
 		return true;
@@ -366,10 +389,10 @@ void loop()
 		DS18B20 result;
 		while(ReadTemp(result))
 		{
-			Serial.print("Dev = ");
-			Serial.println(result.addr);
-			Serial.print("Temp = ");
-			Serial.println(result.temp);
+			//Serial.print("Dev = ");
+			//Serial.println(result.addr);
+			//Serial.print("Temp = ");
+			//Serial.println(result.temp);
 
 			// TODO: send temperature to RPi
 			//SendToRPi(result);

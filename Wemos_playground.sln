@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConfigFile", "ConfigFile\Co
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Temperature", "Temperature\Temperature.vcxproj", "{FE301D2A-4FB1-4B20-B0D7-AA0C333D7DD1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{F287E30B-12AF-463F-972D-846121AC686C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -69,6 +71,10 @@ Global
 		{FE301D2A-4FB1-4B20-B0D7-AA0C333D7DD1}.Debug|x86.Build.0 = Debug|Win32
 		{FE301D2A-4FB1-4B20-B0D7-AA0C333D7DD1}.Release|x86.ActiveCfg = Release|Win32
 		{FE301D2A-4FB1-4B20-B0D7-AA0C333D7DD1}.Release|x86.Build.0 = Release|Win32
+		{F287E30B-12AF-463F-972D-846121AC686C}.Debug|x86.ActiveCfg = Debug|Win32
+		{F287E30B-12AF-463F-972D-846121AC686C}.Debug|x86.Build.0 = Debug|Win32
+		{F287E30B-12AF-463F-972D-846121AC686C}.Release|x86.ActiveCfg = Release|Win32
+		{F287E30B-12AF-463F-972D-846121AC686C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
