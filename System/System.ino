@@ -2,12 +2,24 @@
 #include <FS.h>
 #include <OneWire.h>
 
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
+
 #include "OTA.h"
 
 OneWire  ds(D7);  // on pin 10 (a 4.7K resistor is necessary)
 
 const char* ssid = "";
 const char* password = "";
+const char* mqtt_server = "pizero";
+char NR_user[8];
+char NR_pass[8];
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+long lastMsg = 0;
+char msg[50];
+int value = 0;
 
 bool sendTemp = true;
 ulong start = millis();
@@ -21,6 +33,63 @@ struct DS18B20
 
 bool ReadTemp(DS18B20 &result);
 bool SendToRPi(DS18B20 &result);
+void reconnect(DS18B20 &result);
+
+void callback(char* topic, byte* payload, unsigned int length) {
+	Serial.print("Message arrived [");
+	Serial.print(topic);
+	Serial.print("] ");
+	for (int i = 0; i < length; i++) {
+		Serial.print((char)payload[i]);
+	}
+	Serial.println();
+
+	// Switch on the LED if an 1 was received as first character
+	if ((char)payload[0] == '1') {
+		digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
+										  // but actually the LED is on; this is because
+										  // it is acive low on the ESP-01)
+	}
+	else {
+		digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+	}
+
+}
+
+void reconnect(DS18B20 &result) {
+	// Loop until we're reconnected
+	Serial.print("> MQTT user: ");
+	Serial.println(NR_user);
+	Serial.print("> MQTT pass: ");
+	Serial.println(NR_pass);
+
+	String msg = "" + result.addr + " " + result.temp;
+
+	while (!client.connected()) {
+		Serial.print("Attempting MQTT connection...");
+		// Attempt to connect
+		if (client.connect("esp", NR_user, NR_pass)) {
+			Serial.println("connected");
+			Serial.println(msg);
+			// Once connected, publish an announcement...
+			client.publish("event", msg.c_str());
+			// ... and resubscribe
+			client.subscribe("event");
+		}
+		else {
+			Serial.print("failed, rc=");
+			Serial.print(client.state());
+			Serial.println(" try again in 5 seconds");
+			// Wait 5 seconds before retrying
+			delay(5000);
+		}
+	}
+}
+void setupMQTT()
+{
+	client.setServer(mqtt_server, 1883);
+	client.setCallback(callback);
+}
 
 bool loadConfig() {
 	File configFile = SPIFFS.open("/config.json", "r");
@@ -47,6 +116,18 @@ bool loadConfig() {
 
 	ssid = json["ssid"];
 	password = json["password"];
+
+	const char* tmp1 = json["NR_user"];
+	strcpy(NR_user, (const char*)tmp1);
+	Serial.print("> NR_user: ");
+	Serial.print(NR_user);
+	Serial.println(".");
+
+	const char* tmp2 = json["NR_pass"];
+	strcpy(NR_pass, (const char*)tmp2);
+	Serial.print("> NR_pass: ");
+	Serial.print(NR_pass);
+	Serial.println(".");
 
 	Serial.println();
 	Serial.print("> Config ssid: ");
@@ -247,6 +328,8 @@ void setup()
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
 
+	setupMQTT();
+
 	bool known = ConnectToKnownNetwork();
 	if (known) 
 	{
@@ -261,6 +344,7 @@ void setup()
 
 void loop() 
 {
+
 	if (OTA.enabled)
 	{
 		OTA.loop();
@@ -276,7 +360,12 @@ void loop()
 			Serial.println(result.temp);
 
 			// TODO: send temperature to RPi
-			SendToRPi(result);
+			//SendToRPi(result);
+			
+			if (!client.connected()) {
+				reconnect(result);
+			}
+			client.loop();
 		}
 
 		ulong  b = sleep * 1e6 - millis();
@@ -286,4 +375,5 @@ void loop()
 		ESP.deepSleep(b);
 		delay(100);
 	}
+
 }
