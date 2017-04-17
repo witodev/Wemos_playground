@@ -23,7 +23,7 @@ int value = 0;
 
 bool sendTemp = true;
 ulong start = millis();
-ulong sleep = 55;
+ulong sleep = 10;
 
 #define SENSORDATA_JSON_SIZE (JSON_OBJECT_SIZE(2))
 
@@ -116,7 +116,8 @@ void reconnect(DS18B20 &result) {
 	}
 	else
 	{
-		Serial.println("connection failed");
+		Serial.println("> MQTT Connected");
+		client.publish("event", msg);
 	}
 
 }
@@ -379,7 +380,6 @@ void setup()
 
 void loop() 
 {
-
 	if (OTA.enabled)
 	{
 		OTA.loop();
@@ -389,17 +389,17 @@ void loop()
 		DS18B20 result;
 		while(ReadTemp(result))
 		{
-			//Serial.print("Dev = ");
-			//Serial.println(result.addr);
-			//Serial.print("Temp = ");
-			//Serial.println(result.temp);
+			Serial.print("Dev = ");
+			Serial.println(result.addr);
+			Serial.print("Temp = ");
+			Serial.println(result.temp);
 
 			// TODO: send temperature to RPi
 			//SendToRPi(result);
 			
-			if (!client.connected()) {
+			//if (!client.connected()) {
 				reconnect(result);
-			}
+			//}
 			client.loop();
 		}
 
@@ -407,7 +407,8 @@ void loop()
 		Serial.print("Going deep sleep ");
 		Serial.println(b);
 
-		ESP.deepSleep(b);
+		if (sleep > 0)
+			ESP.deepSleep(b);
 		delay(100);
 	}
 
