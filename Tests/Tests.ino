@@ -7,7 +7,7 @@
 
 #define SENSORDATA_JSON_SIZE (JSON_OBJECT_SIZE(2))
 
-
+//lol
 struct DS18B20
 {
 	const char* addr;
