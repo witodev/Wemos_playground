@@ -82,13 +82,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h" />
     <ClInclude Include="OTA.h" />
+    <ClInclude Include="Ustawienia.h">
+      <DeploymentContent>false</DeploymentContent>
+    </ClInclude>
     <ClInclude Include="__vm\.System.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Config.cpp" />
     <ClCompile Include="OTA.cpp" />
+    <ClCompile Include="Ustawienia.cpp">
+      <DeploymentContent>false</DeploymentContent>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="board.txt" />

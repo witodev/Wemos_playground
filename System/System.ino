@@ -1,30 +1,13 @@
 
-//#include <ArduinoJson.h>
-//#include <FS.h>
+#include "Ustawienia.h"
+#include <ArduinoJson.h>
+#include <FS.h>
 #include <OneWire.h>
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
 #include "OTA.h"
-
-OneWire  ds(D7);  // on pin 10 (a 4.7K resistor is necessary)
-
-const char* ssid;
-const char* password;
-const char* mqtt_server = "pizero";
-const char* mqtt_user;
-const char* mqtt_pass;
-
-WiFiClient espClient;
-PubSubClient client(espClient);
-long lastMsg = 0;
-char msg[50];
-int value = 0;
-
-bool sendTemp = true;
-ulong start = millis();
-ulong sleep = 10;
 
 #define SENSORDATA_JSON_SIZE (JSON_OBJECT_SIZE(2))
 
@@ -57,6 +40,32 @@ struct DS18B20
 bool ReadTemp(DS18B20 &result);
 bool SendToRPi(DS18B20 &result);
 void reconnect(DS18B20 &result);
+bool ConnectToKnownNetwork();
+char* Convert(const char* source);
+void callback(char* topic, byte* payload, unsigned int length);
+void setupMQTT();
+void ShowConfig(const char* title, const char* value);
+bool loadConfig();
+void setup();
+void loop();
+
+OneWire  ds(D7);  // on pin 10 (a 4.7K resistor is necessary)
+
+const char* ssid;
+const char* password;
+const char* mqtt_server = "pizero";
+const char* mqtt_user;
+const char* mqtt_pass;
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+long lastMsg = 0;
+char msg[50];
+int value = 0;
+
+bool sendTemp = true;
+ulong start = millis();
+ulong sleep = 10;
 
 char* Convert(const char* source)
 {
@@ -365,8 +374,7 @@ void setup()
 
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
-
-
+	
 	setupMQTT();
 
 	bool known = ConnectToKnownNetwork();

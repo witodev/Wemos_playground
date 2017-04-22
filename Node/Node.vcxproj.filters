@@ -15,28 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="System.ino" />
+    <None Include="Node.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.System.vsarduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OTA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ustawienia.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="OTA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Ustawienia.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\System\OTA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="board.txt" />
+    <ClInclude Include="Ustawienia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="__vm\.Node.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\System\OTA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
