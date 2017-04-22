@@ -57,7 +57,10 @@ void UstawieniaClass::ShowConfig(const char* title, const char* value)
 	Serial.print("> Config ");
 	Serial.print(title);
 	Serial.print(": ");
-	Serial.println(value);
+	Serial.print(value);
+	Serial.print(" (len: ");
+	Serial.print(strlen(value));
+	Serial.println(")");
 }
 
 char * UstawieniaClass::Convert(const char * source)

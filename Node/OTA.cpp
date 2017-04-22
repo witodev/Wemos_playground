@@ -17,14 +17,13 @@ bool OTAClass::CheckOnRPi()
 	}
 
 	// We now create a URI for the request
-	String page = Ustawienia.ota_page;
-	String url = page + WiFi.hostname();
+	String url = "/" + String(Ustawienia.ota_page) + WiFi.hostname();
 	
-	Serial.print("Host: ");
-	Serial.println(host);
+	//Serial.print("Host: ");
+	//Serial.println(host);
 
-	Serial.print("Requesting URL: ");
-	Serial.println(url);
+	//Serial.print("Requesting URL: ");
+	//Serial.println(url);
 
 	// This will send the request to the server
 	client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -44,7 +43,7 @@ bool OTAClass::CheckOnRPi()
 	String line = "";
 	while (client.available()) {
 		line = client.readStringUntil('\r');
-		Serial.println(line);
+		//Serial.println(line);
 	}
 
 	line.trim();
