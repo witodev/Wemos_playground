@@ -7,7 +7,6 @@
 #include <PubSubClient.h>
 
 #include "OTA.h"
-#include "Config.h"
 
 OneWire  ds(D7);  // on pin 10 (a 4.7K resistor is necessary)
 
