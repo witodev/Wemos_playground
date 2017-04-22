@@ -1,11 +1,13 @@
-#include <ArduinoJson.h>
-#include <FS.h>
+
+//#include <ArduinoJson.h>
+//#include <FS.h>
 #include <OneWire.h>
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
 #include "OTA.h"
+#include "Config.h"
 
 OneWire  ds(D7);  // on pin 10 (a 4.7K resistor is necessary)
 
@@ -361,8 +363,10 @@ void setup()
 {
 	Serial.begin(115200);
 	delay(1000);
+
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
+
 
 	setupMQTT();
 

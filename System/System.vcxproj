@@ -82,10 +82,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="OTA.h" />
     <ClInclude Include="__vm\.System.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="OTA.cpp" />
   </ItemGroup>
   <ItemGroup>
