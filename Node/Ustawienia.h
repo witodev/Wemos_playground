@@ -26,6 +26,7 @@ class UstawieniaClass
 	const char* password;
 	const char* mqtt_user;
 	const char* mqtt_pass;
+	const char* mqtt_host;
 	const char* ota_host;
 	const char* ota_page;
 

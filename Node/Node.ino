@@ -39,4 +39,12 @@ void setup()
 
 void loop() 
 {
+	if (OTA.enabled)
+	{
+		OTA.loop();
+	}
+	else
+	{
+
+	}
 }

@@ -37,6 +37,7 @@ bool UstawieniaClass::LoadConfig()
 	password = Convert(json["password"]);
 	mqtt_user = Convert(json["mqtt_user"]);
 	mqtt_pass = Convert(json["mqtt_pass"]);
+	mqtt_host = Convert(json["mqtt_host"]);
 	ota_host = Convert(json["ota_host"]);
 	ota_page = Convert(json["ota_page"]);
 
@@ -44,6 +45,7 @@ bool UstawieniaClass::LoadConfig()
 	ShowConfig("password", password);
 	ShowConfig("mqtt_user", mqtt_user);
 	ShowConfig("mqtt_pass", mqtt_pass);
+	ShowConfig("mqtt_host", mqtt_host);
 	ShowConfig("ota_host", ota_host);
 	ShowConfig("ota_page", ota_page);
 	
