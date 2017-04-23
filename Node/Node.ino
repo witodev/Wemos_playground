@@ -73,7 +73,7 @@ void loop()
 			temp = sensor.GetJsonData();
 		}
 
-		auto timeToSleep = sleep * 1e6 - micros() + 270 * 1e3;
+		auto timeToSleep = sleep * 1e6 - micros() + 1400 * 1e3;
 		Serial.print("Sleep time: ");
 		Serial.println(timeToSleep);
 		ESP.deepSleep(timeToSleep);
