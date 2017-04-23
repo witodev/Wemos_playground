@@ -73,6 +73,7 @@ char * UstawieniaClass::Convert(const char * source)
 
 void UstawieniaClass::init()
 {
+	Serial.println("> Ustawienia init");
 	LoadConfig();
 }
 

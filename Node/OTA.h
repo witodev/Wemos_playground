@@ -25,7 +25,7 @@ private:
 	void init();
 	void loop();
 	bool check();
-	bool enabled;
+	bool enabled = false;
 };
 
 extern OTAClass OTA;

@@ -1,7 +1,12 @@
+#include <cstdlib>
+
 #include <ESP8266WiFi.h>
 
 #include "Ustawienia.h"
 #include "OTA.h";
+#include "MQTT.h"
+
+int sleep = 10; // sekund
 
 bool ConnectToKnownNetwork()
 {
@@ -26,7 +31,7 @@ void setup()
 	Serial.begin(115200);
 
 	Ustawienia.init();
-	
+
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
 	
@@ -35,6 +40,8 @@ void setup()
 	{
 		if (OTA.check())
 			OTA.init();
+		
+		MQTT.init();
 	}
 }
 
@@ -46,6 +53,12 @@ void loop()
 	}
 	else
 	{
-
+		srand(millis());
+		float temp = (rand() % 100) / 10.0 + 20.0;
+		String t = "{\"dev\":\"dummy\",\"temp\":" + String(temp) + "}";
+		MQTT.Send("event", t.c_str());
+		ESP.deepSleep(sleep * 1e6);
 	}
+	yield();
+	delay(100);
 }

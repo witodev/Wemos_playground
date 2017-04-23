@@ -66,7 +66,6 @@ bool OTAClass::CheckOnRPi()
 
 void OTAClass::init()
 {			
-	enabled = false;
 	// Port defaults to 8266
 	 ArduinoOTA.setPort(8266);
 
