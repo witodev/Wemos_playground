@@ -5,7 +5,7 @@
 #include "MQTT.h"
 #include "DS18B20.h"
 
-int sleep = 59; // sekund
+int sleep = 60; // sekund
 DS18B20 sensor(D7);
 
 bool ConnectToKnownNetwork()
@@ -58,12 +58,11 @@ void loop()
 	}
 	else
 	{
-		float temp = sensor.ReadTempCelcius();
+		auto temp = sensor.GetJsonData();
 		while (temp != NULL)
 		{
-			String t = "{\"dev\":\"dummy\",\"temp\":" + String(temp) + "}";
-			MQTT.Send("event", t.c_str());
-			temp = sensor.ReadTempCelcius();
+			MQTT.Send("event", temp);
+			temp = sensor.GetJsonData();
 		}
 
 		auto timeToSleep = sleep * 1e6 - micros() + 270 * 1e3;

@@ -10,11 +10,21 @@
 #endif
 
 #include <OneWire.h>
+#include <ArduinoJson.h>
 
 class DS18B20
 {
 private:
 	OneWire* ds;
+
+	char* Convert(const char* source)
+	{
+		auto len = 100;// strlen(source);
+		auto buff = new char[len];
+		strcpy(buff, source);
+		return buff;
+	}
+
 protected:
 
 
@@ -23,6 +33,35 @@ public:
 	~DS18B20();
 
 	float ReadTempCelcius();
+	char* GetJsonData();
+};
+
+#define SENSORDATA_JSON_SIZE (JSON_OBJECT_SIZE(2))
+
+struct DS18B20data
+{
+	const char* addr;
+	float temp;
+
+	bool deserialize(char* json)
+	{
+		StaticJsonBuffer<SENSORDATA_JSON_SIZE> jsonBuffer;
+		JsonObject& root = jsonBuffer.parseObject(json);
+		addr = (const char*)root["dev"];
+		temp = root["temp"];
+		return root.success();
+	}
+
+	char* serialize(size_t maxSize)
+	{
+		char* json = new char[maxSize];
+		StaticJsonBuffer<SENSORDATA_JSON_SIZE> jsonBuffer;
+		JsonObject& root = jsonBuffer.createObject();
+		root["dev"] = addr;
+		root["temp"] = temp;
+		root.printTo(json, maxSize);
+		return json;
+	}
 };
 
 #endif
