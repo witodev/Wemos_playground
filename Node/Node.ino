@@ -5,7 +5,7 @@
 #include "MQTT.h"
 #include "DS18B20.h"
 
-int sleep = 60; // sekund
+int sleep = 59; // sekund
 DS18B20 sensor(D7);
 
 bool ConnectToKnownNetwork()
