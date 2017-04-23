@@ -6,11 +6,6 @@
 
 bool UstawieniaClass::LoadConfig()
 {
-	if (!SPIFFS.begin()) {
-		Serial.println("Failed to mount file system");
-		return false;
-	}
-
 	File configFile = SPIFFS.open("/config.json", "r");
 	if (!configFile) {
 		Serial.println("Failed to open config file");
@@ -71,10 +66,20 @@ char * UstawieniaClass::Convert(const char * source)
 	return buff;
 }
 
-void UstawieniaClass::init()
+
+bool UstawieniaClass::init()
 {
 	Serial.println("> Ustawienia init");
-	LoadConfig();
+
+	if (!SPIFFS.begin()) {
+		Serial.println("Failed to mount file system");
+		return false;
+	}
+
+	if (SPIFFS.exists("/config.json"))
+		return LoadConfig();
+	else
+		return false;
 }
 
 

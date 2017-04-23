@@ -19,8 +19,8 @@ class UstawieniaClass
 	 void ShowConfig(const char* title, const char* value);
 	 char* Convert(const char* source);
 
- public:
-	void init();
+public:
+	bool init();
 
 	const char* ssid;
 	const char* password;

@@ -5,11 +5,15 @@
 #include "MQTT.h"
 #include "DS18B20.h"
 
+bool knownNetwork = false;
 int sleep = 60; // sekund
 DS18B20 sensor(D7);
 
 bool ConnectToKnownNetwork()
 {
+	if (!Ustawienia.init())
+		return false;
+
 	WiFi.disconnect();
 	
 	WiFi.begin(Ustawienia.ssid, Ustawienia.password);
@@ -30,23 +34,27 @@ void setup()
 {
 	Serial.begin(115200);
 	Serial.println();
-
-	Ustawienia.init();
-
+	
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
 	
-	bool known = ConnectToKnownNetwork();
-	if (known)
+	knownNetwork = ConnectToKnownNetwork();
+	if (knownNetwork)
 	{
 		if (OTA.check())
 		{
 			OTA.init();
 		}
-		else
+		else // normalna praca
 		{
 			MQTT.init();
 		}
+	}
+	else
+	{
+		// tuat wypada postawic server do konfiguracji...
+		Serial.println("Host config server...");
+		ESP.reset();
 	}
 }
 
@@ -56,7 +64,7 @@ void loop()
 	{
 		OTA.loop();
 	}
-	else
+	else if (knownNetwork) // normalna praca
 	{
 		auto temp = sensor.GetJsonData();
 		while (temp != NULL)
@@ -69,6 +77,12 @@ void loop()
 		Serial.print("Sleep time: ");
 		Serial.println(timeToSleep);
 		ESP.deepSleep(timeToSleep);
+	}
+	else
+	{
+		// czekaj na klienta do konfiguracji
+		Serial.println("Waiting for client to configure ESP...");
+		ESP.reset();
 	}
 	yield();
 	delay(100);
