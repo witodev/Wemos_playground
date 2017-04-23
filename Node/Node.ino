@@ -29,6 +29,7 @@ bool ConnectToKnownNetwork()
 void setup() 
 {
 	Serial.begin(115200);
+	Serial.println();
 
 	Ustawienia.init();
 
@@ -39,9 +40,13 @@ void setup()
 	if (known)
 	{
 		if (OTA.check())
+		{
 			OTA.init();
-		
-		MQTT.init();
+		}
+		else
+		{
+			MQTT.init();
+		}
 	}
 }
 
