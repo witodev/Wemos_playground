@@ -1,12 +1,12 @@
-#include <cstdlib>
-
 #include <ESP8266WiFi.h>
 
 #include "Ustawienia.h"
 #include "OTA.h";
 #include "MQTT.h"
+#include "DS18B20.h"
 
-int sleep = 10; // sekund
+int sleep = 60; // sekund
+DS18B20 sensor(D7);
 
 bool ConnectToKnownNetwork()
 {
@@ -58,11 +58,18 @@ void loop()
 	}
 	else
 	{
-		srand(millis());
-		float temp = (rand() % 100) / 10.0 + 20.0;
-		String t = "{\"dev\":\"dummy\",\"temp\":" + String(temp) + "}";
-		MQTT.Send("event", t.c_str());
-		ESP.deepSleep(sleep * 1e6);
+		float temp = sensor.ReadTempCelcius();
+		while (temp != NULL)
+		{
+			String t = "{\"dev\":\"dummy\",\"temp\":" + String(temp) + "}";
+			MQTT.Send("event", t.c_str());
+			temp = sensor.ReadTempCelcius();
+		}
+
+		auto timeToSleep = sleep * 1e6 - micros() + 270 * 1e3;
+		Serial.print("Sleep time: ");
+		Serial.println(timeToSleep);
+		ESP.deepSleep(timeToSleep);
 	}
 	yield();
 	delay(100);
