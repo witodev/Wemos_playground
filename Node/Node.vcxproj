@@ -82,6 +82,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigServer.cpp" />
     <ClCompile Include="DS18B20.cpp" />
     <ClCompile Include="MQTT.cpp" />
     <ClCompile Include="OTA.cpp" />
@@ -89,6 +90,7 @@
     <ClCompile Include="Ustawienia.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigServer.h" />
     <ClInclude Include="DS18B20.h" />
     <ClInclude Include="MQTT.h" />
     <ClInclude Include="OTA.h" />

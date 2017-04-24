@@ -1,3 +1,4 @@
+#include "ConfigServer.h"
 #include <ESP8266WiFi.h>
 
 #include "Ustawienia.h"
@@ -15,7 +16,8 @@ bool ConnectToKnownNetwork()
 		return false;
 
 	WiFi.disconnect();
-	
+
+	WiFi.mode(WIFI_STA);
 	WiFi.begin(Ustawienia.ssid, Ustawienia.password);
 	Serial.println("");
 
@@ -34,6 +36,9 @@ void setup()
 {
 	Serial.begin(115200);
 	Serial.println();
+
+	ConfigServer.init();
+	ConfigServer.Scan();
 	
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
