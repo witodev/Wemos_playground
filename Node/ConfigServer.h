@@ -10,6 +10,11 @@
 #endif
 
 #include <ESP8266WiFi.h>
+#include <WiFiClient.h> 
+#include <ESP8266WebServer.h>
+#include <FS.h>
+
+#include "Pages.h"
 
 class ConfigServerClass
 {
@@ -26,12 +31,20 @@ private:
 	// base on http://forum.arduino.cc/index.php?topic=38025.0
 	void quickSort(Network arr[], int left, int right);
 
+	char* Convert(const char * source, size_t len);
+	char* GetPage(const char* title);
+	
+	void Handles();
+	ESP8266WebServer* server;
+	void handleRoot();
+	void handleCSS();
+
  protected:
 
 
  public:
 	void init();
-	void Scan();
+	void loop();
 
 	~ConfigServerClass()
 	{
