@@ -177,10 +177,14 @@ void ConfigServerClass::handleConfig()
 	message += "\n";
 		
 	String json = "{\n";
-	for (uint8_t i = 0; i<server->args(); i++) {
+	uint8_t tmp = 0;
+	for (uint8_t i = 0; i<server->args()-1; i++) {
 		message += " " + server->argName(i) + ": " + server->arg(i) + "\n";
 		json += "\""+ server->argName(i) +"\": \""+ server->arg(i) +"\",\n";
+		tmp = i;
 	}
+	tmp++;
+	json += "\"" + server->argName(tmp) + "\": \"" + server->arg(tmp) + "\"\n";
 	json += "}";
 
 	server->send(404, "text/plain", message);
@@ -210,9 +214,11 @@ void ConfigServerClass::saveConfig(const char* msg)
 	Serial.println(msg);
 
 	configFile.println(msg);
-
+	configFile.flush();
 	configFile.close();
-	Serial.println("> Server config saved");
+	SPIFFS.end();
+
+	Serial.println("> Server config saved ... Reset ...");
 
 	yield();
 	delay(100);

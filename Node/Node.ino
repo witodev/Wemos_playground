@@ -12,8 +12,6 @@ DS18B20 sensor(D7);
 
 bool ConnectToKnownNetwork()
 {
-	return false;
-
 	if (!Ustawienia.init())
 		return false;
 
@@ -24,12 +22,17 @@ bool ConnectToKnownNetwork()
 	Serial.println("");
 
 	// Wait for connection
-	while (WiFi.status() != WL_CONNECTED) {
+	ulong wait = 1e4;
+	ulong cur = millis();
+	while (WiFi.status() != WL_CONNECTED && (millis()<(cur+wait))) {
 		delay(500);
 		//Serial.print(".");
 		Serial.print("> Wait for IP: ");
 		Serial.println(WiFi.localIP());
 	}
+
+	if (millis() >= (cur + wait))
+		return false;
 
 	return true;
 }
