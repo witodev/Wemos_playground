@@ -13,6 +13,7 @@
 #include <WiFiClient.h> 
 #include <ESP8266WebServer.h>
 #include <FS.h>
+#include <cstdio>
 
 #include "Pages.h"
 
@@ -38,6 +39,8 @@ private:
 	ESP8266WebServer* server;
 	void handleRoot();
 	void handleCSS();
+	void handleConfig();
+	void saveConfig(const char* msg);
 
  protected:
 

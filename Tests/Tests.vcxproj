@@ -87,4 +87,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties custom_esp8266_d1_mini_UploadSpeed="921600" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

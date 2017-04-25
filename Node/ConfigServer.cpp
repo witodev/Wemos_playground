@@ -88,7 +88,7 @@ char * ConfigServerClass::GetPage(const char * title)
 {
 	if (!SPIFFS.begin()) {
 		Serial.println("Failed to mount file system");
-		return;
+		return NULL;
 	}
 
 	String filename = "/" + String(title);
@@ -104,14 +104,18 @@ char * ConfigServerClass::GetPage(const char * title)
 		}
 
 		size_t size = configFile.size();
-		if (size > 2048) {
+		if (size > 10240) {
 			Serial.println("Config file size is too large");
 			return NULL;
 		}
-		std::unique_ptr<char[]> buf(new char[size]);
-		configFile.readBytes(buf.get(), size);
-		
-		return Convert(buf.get(), size);
+
+		//std::unique_ptr<char[]> buf(new char[size]);
+		char* buf = new char[size];
+		configFile.readBytes(buf, size);
+		Serial.print("> File size: ");
+		Serial.println(size);
+
+		return buf;
 	}
 	else
 		return NULL;
@@ -121,16 +125,98 @@ void ConfigServerClass::Handles()
 {
 	server->on("/", std::bind(&ConfigServerClass::handleRoot, this));
 	server->on("/esp.css", std::bind(&ConfigServerClass::handleCSS, this));
+	server->on("/config.php", std::bind(&ConfigServerClass::handleConfig, this));
 }
 
 void ConfigServerClass::handleRoot()
 {
-	server->send(200, "text/html", index_html);
+	Serial.println("> Server: handleRoot");
+	//const char* index1 = GetPage("indexStart.txt");
+	//const char* index2 = GetPage("indexEnd.txt");
+
+	String net = "";
+	for (int i = 0; i < netCount; ++i)
+	{
+		net += "<option value=\""+ String(networks[i].name) +"\">"+ String(networks[i].name) +"</option>";
+	}
+
+	//Serial.println("> Server: networks found");
+
+	String page = "";
+	//page.concat(index1_html);
+	//page.concat(net.c_str());
+	page += String(index1_html);
+	page += net;
+	page += String(index2_html);
+		
+	server->send(200, "text/html", page);
+
+	page = "";
+	//delete[] index1;
+	//delete[] index2;
+	//Serial.println("> Server: handleRoot end");
 }
 
 void ConfigServerClass::handleCSS()
 {
+	Serial.println("> Server: handleCSS");
 	server->send(200, "text/css", esp_css);
+}
+
+void ConfigServerClass::handleConfig()
+{
+	Serial.println("> Server: handleConfig");
+
+	String message = "File Not Found\n\n";
+	message += "URI: ";
+	message += server->uri();
+	message += "\nMethod: ";
+	message += (server->method() == HTTP_GET) ? "GET" : "POST";
+	message += "\nArguments: ";
+	message += server->args();
+	message += "\n";
+		
+	String json = "{\n";
+	for (uint8_t i = 0; i<server->args(); i++) {
+		message += " " + server->argName(i) + ": " + server->arg(i) + "\n";
+		json += "\""+ server->argName(i) +"\": \""+ server->arg(i) +"\",\n";
+	}
+	json += "}";
+
+	server->send(404, "text/plain", message);
+		
+	//Serial.println(json);
+	saveConfig(json.c_str());
+
+	message = "";
+}
+
+void ConfigServerClass::saveConfig(const char* msg)
+{
+	if (!SPIFFS.begin()) {
+		Serial.println("Failed to mount file system");
+		return;
+	}
+
+	// Open config file for writing.
+	File configFile = SPIFFS.open("/config.json", "w");
+	if (!configFile)
+	{
+		Serial.println("Failed to open config.json for writing");
+		return;
+	}
+
+	Serial.print("> Server config: ");
+	Serial.println(msg);
+
+	configFile.println(msg);
+
+	configFile.close();
+	Serial.println("> Server config saved");
+
+	yield();
+	delay(100);
+	ESP.restart();
 }
 
 void ConfigServerClass::init()

@@ -104,7 +104,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties arduino.upload.port="COM3" />
+      <UserProperties custom_esp8266_d1_mini_UploadSpeed="921600" arduino.upload.port="COM3" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

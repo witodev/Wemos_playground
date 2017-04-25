@@ -38,8 +38,7 @@ void setup()
 {
 	Serial.begin(115200);
 	Serial.println();
-
-	
+		
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
 	
