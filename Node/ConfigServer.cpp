@@ -210,7 +210,7 @@ void ConfigServerClass::saveConfig(const char* msg)
 		return;
 	}
 
-	Serial.print("> Server config: ");
+	Serial.println("> Server config: ");
 	Serial.println(msg);
 
 	configFile.println(msg);
@@ -243,7 +243,6 @@ void ConfigServerClass::init()
 	Serial.println(myIP);
 	Handles();
 	server->begin();
-
 }
 
 void ConfigServerClass::loop()

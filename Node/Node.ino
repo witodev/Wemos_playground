@@ -57,7 +57,7 @@ void setup()
 			MQTT.init();
 		}
 	}
-	else// tuat wypada postawic server do konfiguracji...
+	else// tutaj wypada postawic server do konfiguracji...
 	{
 		ConfigServer.init();
 	}

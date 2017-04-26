@@ -26,6 +26,7 @@ private:
 	void loop();
 	bool check();
 	bool enabled = false;
+	bool Host(const char* http = "pizero");
 };
 
 extern OTAClass OTA;

@@ -91,13 +91,15 @@ body {
 }
 
 .key {
-    width: 150px;
+    width: 180px;
     float: left;
     text-align: right;
+    font-size: 30px;
 }
 
 .val {
     width: 300px;
+    font-size: 30px;
 }
 
 .sub {

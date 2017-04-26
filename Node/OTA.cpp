@@ -136,6 +136,11 @@ bool OTAClass::check()
 	return net;
 }
 
+bool OTAClass::Host(const char * http)
+{
+	return false;
+}
+
 
 OTAClass OTA;
 
