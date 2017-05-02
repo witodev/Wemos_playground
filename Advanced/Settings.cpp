@@ -112,6 +112,32 @@ const char * SettingsClass::Get(const char * title)
 	return Convert(json[title]);;
 }
 
+bool SettingsClass::ConnectToWiFi()
+{
+	WiFi.disconnect();
+
+	WiFi.mode(WIFI_STA);
+	WiFi.begin(Get("ssid"), Get("password"));
+	Serial.println("");
+
+	// Wait for connection
+	ulong wait = 1e4;
+	ulong cur = millis();
+	while (WiFi.status() != WL_CONNECTED && (millis()<(cur + wait))) {
+		delay(500);
+		//Serial.print(".");
+		Serial.print("> Wait for IP: ");
+		Serial.println(WiFi.localIP());
+	}
+
+	OK = false;
+	if (millis() >= (cur + wait))
+		return false;
+
+	OK = true;
+	return true;
+}
+
 void SettingsClass::ShowConfig(const char* title, const char* value)
 {
 	Serial.print("> Config ");

@@ -9,6 +9,7 @@
 	#include "WProgram.h"
 #endif
 
+#include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 #include <FS.h>
 #include "Base.h"
@@ -39,6 +40,8 @@ public:
 	{
 		return Get(title);
 	}
+
+	bool ConnectToWiFi();
 };
 
 extern SettingsClass Settings;
