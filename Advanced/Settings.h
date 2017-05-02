@@ -18,10 +18,14 @@ class SettingsClass : public Base
 private:
 	void ShowConfig(const char* title, const char* value);
 	char* Convert(const char* source);
+	StaticJsonBuffer<200> jsonBuffer;
 public:
 	bool check();
 	void init();
 	void loop();
+	const char* Get(const char* title);
+
+	JsonObject* Data;
 
 	const char* ssid;
 	const char* password;
@@ -30,6 +34,11 @@ public:
 	const char* mqtt_host;
 	const char* ota_host;
 	const char* ota_page;
+
+	const char* operator[](const char* title)
+	{
+		return Get(title);
+	}
 };
 
 extern SettingsClass Settings;

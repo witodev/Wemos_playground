@@ -49,6 +49,7 @@ void SettingsClass::init()
 
 	StaticJsonBuffer<200> jsonBuffer;
 	JsonObject& json = jsonBuffer.parseObject(buf.get());
+	Data = &json;
 
 	if (!json.success()) {
 		Serial.println("Failed to parse config file");
@@ -80,6 +81,37 @@ void SettingsClass::loop()
 	Serial.println("> Settings loop");
 }
 
+const char * SettingsClass::Get(const char * title)
+{
+	File configFile = SPIFFS.open("/config.json", "r");
+	if (!configFile) {
+		Serial.println("Failed to open config file");
+		OK = false;
+		return NULL;
+	}
+
+	size_t size = configFile.size();
+	if (size > 1024) {
+		Serial.println("Config file size is too large");
+		OK = false;
+		return NULL;
+	}
+	std::unique_ptr<char[]> buf(new char[size]);
+	configFile.readBytes(buf.get(), size);
+
+	StaticJsonBuffer<200> jsonBuffer;
+	JsonObject& json = jsonBuffer.parseObject(buf.get());
+	Data = &json;
+
+	if (!json.success()) {
+		Serial.println("Failed to parse config file");
+		OK = false;
+		return NULL;
+	}
+
+	return Convert(json[title]);;
+}
+
 void SettingsClass::ShowConfig(const char* title, const char* value)
 {
 	Serial.print("> Config ");
@@ -93,7 +125,7 @@ void SettingsClass::ShowConfig(const char* title, const char* value)
 
 char * SettingsClass::Convert(const char * source)
 {
-	auto len = 100;// strlen(source);
+	auto len = 32;// strlen(source);
 	auto buff = new char[len];
 	strcpy(buff, source);
 	return buff;

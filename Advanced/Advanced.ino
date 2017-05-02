@@ -7,6 +7,7 @@ void setup()
 
 	if (Settings.check())
 		Settings.init();
+
 }
 
 void loop() 
