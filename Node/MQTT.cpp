@@ -47,6 +47,23 @@ void MQTTClass::callback(char * topic, byte * payload, unsigned int length)
 //	}
 //}
 
+bool MQTTClass::check()
+{
+	enabled = false;
+	WiFiClient client;
+	const int httpPort = 80;
+	if (!client.connect(Ustawienia.mqtt_host, httpPort)) {
+		Serial.println("> MQTT host not avaliable");
+		return false;
+	}
+	else
+	{
+		enabled = true;
+		client.stop();
+		return true;
+	}
+}
+
 void MQTTClass::init()
 {
 	Serial.println("> MQTT init");
@@ -60,6 +77,22 @@ void MQTTClass::init()
 
 	//client.setCallback(ShowAnswer);
 	client.setCallback(std::bind(&MQTTClass::callback, this, _1, _2, _3));
+}
+
+void MQTTClass::loop()
+{
+	DS18B20 sensor(D7);
+	auto temp = sensor.GetJsonData();
+	while (temp != NULL)
+	{
+		MQTT.Send("event", temp);
+		temp = sensor.GetJsonData();
+	}
+	int sleep = 60;
+	auto timeToSleep = sleep * 1e6 - micros() + 1400 * 1e3;
+	Serial.print("Sleep time: ");
+	Serial.println(timeToSleep);
+	ESP.deepSleep(timeToSleep);
 }
 
 void MQTTClass::Send(const char * topic, const char * msg)

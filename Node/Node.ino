@@ -1,14 +1,12 @@
-#include "ConfigServer.h"
-#include <ESP8266WiFi.h>
 
+#include <ESP8266WiFi.h>
+#include "ConfigServer.h"
 #include "Ustawienia.h"
 #include "OTA.h";
 #include "MQTT.h"
-#include "DS18B20.h"
 
 bool knownNetwork = false;
 int sleep = 60; // sekund
-DS18B20 sensor(D7);
 
 bool ConnectToKnownNetwork()
 {
@@ -52,9 +50,13 @@ void setup()
 		{
 			OTA.init();
 		}
-		else // normalna praca
+		else if (MQTT.check()) // normalna praca
 		{
 			MQTT.init();
+		}
+		else // web server do odczytu temperatury lub konfiguracji
+		{
+			// WebPomiar.init();
 		}
 	}
 	else// tutaj wypada postawic server do konfiguracji...
@@ -65,28 +67,26 @@ void setup()
 
 void loop() 
 {
-	if (OTA.enabled)
+	if (knownNetwork)
 	{
-		OTA.loop();
-	}
-	else if (knownNetwork) // normalna praca
-	{
-		auto temp = sensor.GetJsonData();
-		while (temp != NULL)
+		if (OTA.enabled)
 		{
-			MQTT.Send("event", temp);
-			temp = sensor.GetJsonData();
+			OTA.loop();
 		}
-
-		auto timeToSleep = sleep * 1e6 - micros() + 1400 * 1e3;
-		Serial.print("Sleep time: ");
-		Serial.println(timeToSleep);
-		ESP.deepSleep(timeToSleep);
+		else if (MQTT.enabled)
+		{
+			MQTT.loop();
+		}
+		else // postaw serwer
+		{
+			// WebPomiar.loop();
+		}
 	}
-	else// czekaj na klienta do konfiguracji
-	{		
+	else
+	{
 		ConfigServer.loop();
 	}
+
 	yield();
 	delay(100);
 }

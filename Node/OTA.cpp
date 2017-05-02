@@ -12,7 +12,7 @@ bool OTAClass::CheckOnRPi()
 	// Use WiFiClient class to create TCP connections
 	WiFiClient client;
 	if (!client.connect(host, httpPort)) {
-		Serial.println("> connection failed");
+		Serial.println("> OTA connection failed");
 		return false;
 	}
 
