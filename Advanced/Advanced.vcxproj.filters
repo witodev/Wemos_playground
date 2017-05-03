@@ -36,6 +36,12 @@
     <ClInclude Include="OTA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DS18B20.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MQTT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base.cpp">
@@ -48,6 +54,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OTA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DS18B20.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MQTT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
