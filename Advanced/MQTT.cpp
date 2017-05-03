@@ -103,8 +103,12 @@ void MQTTClass::loop()
 	while (temp != NULL)
 	{
 		MQTT.Send("event", temp);
+		delete[] temp;
 		temp = sensor.GetJsonData();
 	}
+	if (sleep == 0)
+		return;
+
 	auto timeToSleep = sleep * 1e6 - micros() + 1400 * 1e3;
 	Serial.print("Sleep time: ");
 	Serial.println(timeToSleep);

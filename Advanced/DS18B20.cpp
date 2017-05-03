@@ -269,7 +269,7 @@ char * DS18B20::GetJsonData()
 		sprintf(&buffer[2 * j], "%02X", addr[j]);
 
 	DS18B20data result;
-	result.addr = Convert(buffer);
+	result.addr = buffer;//Convert(buffer);
 	result.temp = celsius;
 
 	return result.serialize(100);
