@@ -86,6 +86,7 @@
     <ClInclude Include="..\Node\Pages.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="DS18B20.h" />
+    <ClInclude Include="HostWiFi.h" />
     <ClInclude Include="MQTT.h" />
     <ClInclude Include="OTA.h" />
     <ClInclude Include="Settings.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="..\Node\ConfigServer.cpp" />
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="DS18B20.cpp" />
+    <ClCompile Include="HostWiFi.cpp" />
     <ClCompile Include="MQTT.cpp" />
     <ClCompile Include="OTA.cpp" />
     <ClCompile Include="Settings.cpp" />

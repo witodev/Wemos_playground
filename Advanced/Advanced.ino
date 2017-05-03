@@ -1,4 +1,5 @@
 
+#include "HostWiFi.h"
 #include "Settings.h"
 #include "ConfigServer.h"
 #include "OTA.h"
@@ -8,12 +9,12 @@ void setup()
 {
 	Serial.begin(115200);
 
-	if (Settings.check())
+	if (Settings.check()) // plik konfiguracji istnieje
 	{
-		Settings.init();
-		if (Settings.ConnectToWiFi())
+		Settings.init(); // odczytaj go
+		if (Settings.ConnectToWiFi()) // jesli polaczymy sie do sieci
 		{
-			if (OTA.check())
+			if (OTA.check()) // sprawdz update przez wifi
 			{
 				OTA.init();
 			}
@@ -24,6 +25,7 @@ void setup()
 			else // host web server
 			{
 				Serial.println("web server init");
+				HostWiFi.init();
 			}
 		}
 		else // problem z polaczeniem do sieci wifi, tworzymy wlasna
@@ -41,7 +43,7 @@ void loop()
 {
 	if (Settings.OK)
 	{
-		if (OTA.OK)
+		if (OTA.OK) // update przez wifi
 		{
 			OTA.init();
 		}
@@ -52,6 +54,7 @@ void loop()
 		else // host web server
 		{
 			Serial.println("web server loop");
+			HostWiFi.loop();
 		}
 	}
 	else // jesli ustawienia zawioda to postaw server konfiguracyjny
