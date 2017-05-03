@@ -12,30 +12,6 @@
 #include <OneWire.h>
 #include <ArduinoJson.h>
 
-class DS18B20
-{
-private:
-	OneWire* ds;
-
-	char* Convert(const char* source)
-	{
-		auto len = 100;// strlen(source);
-		auto buff = new char[len];
-		strcpy(buff, source);
-		return buff;
-	}
-
-protected:
-
-
-public:
-	DS18B20(uint8_t pin);
-	~DS18B20();
-
-	float ReadTempCelcius();
-	char* GetJsonData();
-};
-
 #define SENSORDATA_JSON_SIZE (JSON_OBJECT_SIZE(2))
 
 struct DS18B20data
@@ -63,6 +39,32 @@ struct DS18B20data
 		return json;
 	}
 };
+
+class DS18B20
+{
+private:
+	OneWire* ds;
+
+	char* Convert(const char* source)
+	{
+		auto len = 100;// strlen(source);
+		auto buff = new char[len];
+		strcpy(buff, source);
+		return buff;
+	}
+
+protected:
+
+
+public:
+	DS18B20(uint8_t pin);
+	~DS18B20();
+
+	float ReadTempCelcius();
+	char* GetJsonData();
+	DS18B20data GetData();
+};
+
 
 #endif
 

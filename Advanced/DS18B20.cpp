@@ -275,4 +275,11 @@ char * DS18B20::GetJsonData()
 	return result.serialize(100);
 }
 
+DS18B20data DS18B20::GetData()
+{
+	DS18B20data res;
+	res.deserialize(GetJsonData());
+	return res;
+}
+
 
