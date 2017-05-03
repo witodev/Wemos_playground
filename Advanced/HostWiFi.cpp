@@ -19,7 +19,7 @@ void HostWiFiClass::init()
 	server = new ESP8266WebServer(80);
 	Serial.print("> HostWifi: Configuring access point...");
 	/* You can remove the password parameter if you want the AP to be open. */
-	WiFi.softAP(Settings["ssid"], Settings["password"]);
+	WiFi.softAP("BackupServer", "123456789");
 
 	IPAddress myIP = WiFi.softAPIP();
 	Serial.print("> HostWIfi: AP IP address: ");

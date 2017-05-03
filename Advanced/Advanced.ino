@@ -1,5 +1,6 @@
 
-#include "HostWiFi.h"
+#include "WebData.h"
+//#include "HostWiFi.h"
 #include "Settings.h"
 #include "ConfigServer.h"
 #include "OTA.h"
@@ -24,8 +25,7 @@ void setup()
 			}
 			else // host web server
 			{
-				Serial.println("web server init");
-				HostWiFi.init();
+				WebData.init();
 			}
 		}
 		else // problem z polaczeniem do sieci wifi, tworzymy wlasna
@@ -53,8 +53,7 @@ void loop()
 		}
 		else // host web server
 		{
-			Serial.println("web server loop");
-			HostWiFi.loop();
+			WebData.loop();
 		}
 	}
 	else // jesli ustawienia zawioda to postaw server konfiguracyjny
@@ -62,7 +61,6 @@ void loop()
 		ConfigServer.init();
 	}
 
-	Serial.println("yield loop");
 	yield();
-	delay(100);
+	delay(10);
 }
