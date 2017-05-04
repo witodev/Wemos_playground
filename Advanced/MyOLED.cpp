@@ -16,11 +16,15 @@ void MyOLEDClass::init()
 												// Since the buffer is intialized with an Adafruit splashscreen
 												// internally, this will display the splashscreen.
 	display->display();
-	delay(2000);
+	delay(10);
 
 	// Clear the buffer.
 	display->clearDisplay();
-	delay(1000);
+	delay(10);
+	display->drawPixel(0, 0, WHITE);
+	display->display();
+	delay(10);
+	display->clearDisplay();
 }
 
 void MyOLEDClass::print(const char * msg)

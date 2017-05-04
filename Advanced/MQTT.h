@@ -27,7 +27,7 @@ protected:
 	void callback(char* topic, byte* payload, unsigned int length);
 
 public:
-	const int sleep = 0;
+	const int sleep = 60;
 	bool check();
 	void init();
 	void loop();

@@ -16,15 +16,6 @@
 
 #define OLED_RESET LED_BUILTIN
 
-#define NUMFLAKES 10
-#define XPOS 0
-#define YPOS 1
-#define DELTAY 2
-
-
-#define LOGO16_GLCD_HEIGHT 16 
-#define LOGO16_GLCD_WIDTH  16 
-
 class MyOLEDClass
 {
 	Adafruit_SSD1306* display;
