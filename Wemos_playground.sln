@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Blink1", "Blink1\Blink1.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
@@ -30,6 +30,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WiFiAP", "WiFiAP\WiFiAP.vcxproj", "{C8A89D55-6654-459C-841D-96CB80175BA9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced", "Advanced\Advanced.vcxproj", "{245AE07F-DF24-485E-A528-01F887A0B29F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OLED_test", "OLED_test\OLED_test.vcxproj", "{3A647881-7982-491F-AA22-DCADBC6F3892}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{245AE07F-DF24-485E-A528-01F887A0B29F}.Debug|x86.Build.0 = Debug|Win32
 		{245AE07F-DF24-485E-A528-01F887A0B29F}.Release|x86.ActiveCfg = Release|Win32
 		{245AE07F-DF24-485E-A528-01F887A0B29F}.Release|x86.Build.0 = Release|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Debug|x86.Build.0 = Debug|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Release|x86.ActiveCfg = Release|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
