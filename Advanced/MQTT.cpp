@@ -94,19 +94,19 @@ void MQTTClass::init()
 
 	//client.setCallback(ShowAnswer);
 	client.setCallback(std::bind(&MQTTClass::callback, this, _1, _2, _3));
-	MyOLED.init();
+	//MyOLED.init();
 }
 
 void MQTTClass::loop()
 {
-	DS18B20 sensor(D7);
+	DS18B20 sensor(D3);
 	auto temp = sensor.GetJsonData();
 	while (temp != NULL)
 	{
 		MQTT.Send("event", temp);
-		DS18B20data data;
-		data.deserialize(temp);
-		MyOLED.print(data.temp);
+		//DS18B20data data;
+		//data.deserialize(temp);
+		//MyOLED.print(data.temp);
 		delete[] temp;
 		temp = sensor.GetJsonData();
 	}

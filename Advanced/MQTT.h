@@ -15,7 +15,7 @@
 #include "Settings.h"
 #include "DS18B20.h"
 
-#include "MyOLED.h"
+//#include "MyOLED.h"
 
 class MQTTClass : public Base
 {
@@ -27,7 +27,7 @@ protected:
 	void callback(char* topic, byte* payload, unsigned int length);
 
 public:
-	const int sleep = 60;
+	const int sleep = 0;
 	bool check();
 	void init();
 	void loop();
