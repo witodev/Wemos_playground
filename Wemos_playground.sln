@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Blink1", "Blink1\Blink1.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
@@ -28,6 +28,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Node", "Node\Node.vcxproj", "{414066D6-C329-43E4-9125-82C0545B2F20}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WiFiAP", "WiFiAP\WiFiAP.vcxproj", "{C8A89D55-6654-459C-841D-96CB80175BA9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Advanced", "Advanced\Advanced.vcxproj", "{245AE07F-DF24-485E-A528-01F887A0B29F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OLED_test", "OLED_test\OLED_test.vcxproj", "{3A647881-7982-491F-AA22-DCADBC6F3892}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SSD1306_128x64_i2c", "SSD1306_128x64_i2c\SSD1306_128x64_i2c.vcxproj", "{36D8E573-61DD-4D0D-90BC-B52233EABE05}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DHT", "DHT\DHT.vcxproj", "{60946014-E775-4287-968D-3083F1CB51CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +95,22 @@ Global
 		{C8A89D55-6654-459C-841D-96CB80175BA9}.Debug|x86.Build.0 = Debug|Win32
 		{C8A89D55-6654-459C-841D-96CB80175BA9}.Release|x86.ActiveCfg = Release|Win32
 		{C8A89D55-6654-459C-841D-96CB80175BA9}.Release|x86.Build.0 = Release|Win32
+		{245AE07F-DF24-485E-A528-01F887A0B29F}.Debug|x86.ActiveCfg = Debug|Win32
+		{245AE07F-DF24-485E-A528-01F887A0B29F}.Debug|x86.Build.0 = Debug|Win32
+		{245AE07F-DF24-485E-A528-01F887A0B29F}.Release|x86.ActiveCfg = Release|Win32
+		{245AE07F-DF24-485E-A528-01F887A0B29F}.Release|x86.Build.0 = Release|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Debug|x86.Build.0 = Debug|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Release|x86.ActiveCfg = Release|Win32
+		{3A647881-7982-491F-AA22-DCADBC6F3892}.Release|x86.Build.0 = Release|Win32
+		{36D8E573-61DD-4D0D-90BC-B52233EABE05}.Debug|x86.ActiveCfg = Debug|Win32
+		{36D8E573-61DD-4D0D-90BC-B52233EABE05}.Debug|x86.Build.0 = Debug|Win32
+		{36D8E573-61DD-4D0D-90BC-B52233EABE05}.Release|x86.ActiveCfg = Release|Win32
+		{36D8E573-61DD-4D0D-90BC-B52233EABE05}.Release|x86.Build.0 = Release|Win32
+		{60946014-E775-4287-968D-3083F1CB51CA}.Debug|x86.ActiveCfg = Debug|Win32
+		{60946014-E775-4287-968D-3083F1CB51CA}.Debug|x86.Build.0 = Debug|Win32
+		{60946014-E775-4287-968D-3083F1CB51CA}.Release|x86.ActiveCfg = Release|Win32
+		{60946014-E775-4287-968D-3083F1CB51CA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
