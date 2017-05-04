@@ -48,6 +48,9 @@
     <ClInclude Include="WebData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyOLED.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WebData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyOLED.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

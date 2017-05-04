@@ -55,7 +55,7 @@ B00000000, B00110000 };
 #endif
 
 void setup() {
-	Serial.begin(9600);
+	Serial.begin(115200);
 	
 	// by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
@@ -79,49 +79,54 @@ void setup() {
 	delay(2000);
 	display.clearDisplay();
 
-	// draw many lines
-	testdrawline();
+	//// draw many lines
+	//testdrawline();
+	//display.display();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//// draw rectangles
+	//testdrawrect();
+	//display.display();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//// draw multiple rectangles
+	//testfillrect();
+	//display.display();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//// draw mulitple circles
+	//testdrawcircle();
+	//display.display();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//// draw a white circle, 10 pixel radius
+	//display.fillCircle(display.width() / 2, display.height() / 2, 10, WHITE);
+	//display.display();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//testdrawroundrect();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//testfillroundrect();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//testdrawtriangle();
+	//delay(2000);
+	//display.clearDisplay();
+
+	//testfilltriangle();
+	//delay(2000);
+	//display.clearDisplay();
+
+	textSizeTest();
 	display.display();
-	delay(2000);
-	display.clearDisplay();
-
-	// draw rectangles
-	testdrawrect();
-	display.display();
-	delay(2000);
-	display.clearDisplay();
-
-	// draw multiple rectangles
-	testfillrect();
-	display.display();
-	delay(2000);
-	display.clearDisplay();
-
-	// draw mulitple circles
-	testdrawcircle();
-	display.display();
-	delay(2000);
-	display.clearDisplay();
-
-	// draw a white circle, 10 pixel radius
-	display.fillCircle(display.width() / 2, display.height() / 2, 10, WHITE);
-	display.display();
-	delay(2000);
-	display.clearDisplay();
-
-	testdrawroundrect();
-	delay(2000);
-	display.clearDisplay();
-
-	testfillroundrect();
-	delay(2000);
-	display.clearDisplay();
-
-	testdrawtriangle();
-	delay(2000);
-	display.clearDisplay();
-
-	testfilltriangle();
 	delay(2000);
 	display.clearDisplay();
 
@@ -171,6 +176,19 @@ void loop() {
 
 }
 
+void textSizeTest()
+{
+	for (size_t i = 0; i < 10; i++)
+	{
+		display.setTextSize(i);
+		display.setTextColor(WHITE);
+		display.setCursor(0, 0);
+		display.println("21.35");
+		display.display();
+		delay(3000);
+		display.clearDisplay();
+	}
+}
 
 void testdrawbitmap(const uint8_t *bitmap, uint8_t w, uint8_t h) {
 	uint8_t icons[NUMFLAKES][3];
@@ -214,7 +232,7 @@ void testdrawbitmap(const uint8_t *bitmap, uint8_t w, uint8_t h) {
 
 
 void testdrawchar(void) {
-	display.setTextSize(1);
+	display.setTextSize(7);
 	display.setTextColor(WHITE);
 	display.setCursor(0, 0);
 
