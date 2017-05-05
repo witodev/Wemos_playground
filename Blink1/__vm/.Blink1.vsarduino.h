@@ -1,14 +1,12 @@
 /* 
 	Editor: http://www.visualmicro.com
-			visual micro and the arduino ide ignore this code during compilation. this code is automatically maintained by visualmicro, manual changes to this file will be overwritten
-			the contents of the Visual Micro sketch sub folder can be deleted prior to publishing a project
-			all non-arduino files created by visual micro and all visual studio project or solution files can be freely deleted and are not required to compile a sketch (do not delete your own code!).
-			note: debugger breakpoints are stored in '.sln' or '.asln' files, knowledge of last uploaded breakpoints is stored in the upload.vmps.xml file. Both files are required to continue a previous debug session without needing to compile and upload again
+	        visual micro and the arduino ide ignore this code during compilation. this code is automatically maintained by visualmicro, manual changes to this file will be overwritten
+	        the contents of the Visual Micro sketch sub folder can be deleted prior to publishing a project
+	        all non-arduino files created by visual micro and all visual studio project or solution files can be freely deleted and are not required to compile a sketch (do not delete your own code!).
+	        note: debugger breakpoints are stored in '.sln' or '.asln' files, knowledge of last uploaded breakpoints is stored in the upload.vmps.xml file. Both files are required to continue a previous debug session without needing to compile and upload again
 	
 	Hardware: WeMos D1 R2 & mini, Platform=esp8266, Package=esp8266
 */
-
-#if defined(_VMICRO_INTELLISENSE)
 
 #ifndef _VSARDUINO_H_
 #define _VSARDUINO_H_
@@ -18,7 +16,7 @@
 #define ICACHE_FLASH
 #define F_CPU 80000000L
 #define LWIP_OPEN_SRC
-#define ARDUINO 106012
+#define ARDUINO 10802
 #define ARDUINO_ESP8266_WEMOS_D1MINI
 #define ARDUINO_ARCH_ESP8266
 #define ESP8266
@@ -107,5 +105,4 @@ typedef long __PTRDIFF_TYPE__;
 #define noInterrupts() cli()
 
 #include "Blink1.ino"
-#endif
 #endif
