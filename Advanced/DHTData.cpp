@@ -22,7 +22,7 @@ const char * DHTData::GetJsonData()
 	// Check if any reads failed and exit early (to try again).
 	if (isnan(h) || isnan(t)) {
 		Serial.println("> DHT: Failed to read from DHT sensor!");
-		return nullptr;
+		return NULL;
 	}
 	// Compute heat index in Celsius (isFahreheit = false)
 	float hic = dht->computeHeatIndex(t, h, false);

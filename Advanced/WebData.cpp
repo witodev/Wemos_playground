@@ -5,10 +5,13 @@
 #include "WebData.h"
 #include "DS18B20.h"
 #include "DHTData.h"
+#include "MyOLED.h"
 
 void WebDataClass::handleRoot()
 {
 	DS18B20 sensor(D3);
+	//auto val = sensor.ReadTempCelcius();
+	//MyOLED.print(val);
 	DHTData hum;
 	
 	char temp[400];
@@ -83,6 +86,8 @@ bool WebDataClass::check()
 
 void WebDataClass::init()
 {
+	MyOLED.init();
+
 	server = new ESP8266WebServer(80);
 	
 	if (MDNS.begin("esp8266")) {

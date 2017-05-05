@@ -9,20 +9,19 @@
 	#include "WProgram.h"
 #endif
 
-#include <SPI.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <SSD1306.h> // alias for `#include "SSD1306Wire.h"`
+
 
 #define OLED_RESET LED_BUILTIN
 
 class MyOLEDClass
 {
-	Adafruit_SSD1306* display;
+	SSD1306* display;
 protected:
 
 
-public:
+public:;
 	void init();
 	void print(const char* msg);
 	void print(float temp);
