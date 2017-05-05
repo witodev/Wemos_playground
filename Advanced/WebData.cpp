@@ -3,9 +3,14 @@
 // 
 
 #include "WebData.h"
+#include "DS18B20.h"
+#include "DHTData.h"
 
 void WebDataClass::handleRoot()
 {
+	DS18B20 sensor(D3);
+	DHTData hum;
+	
 	char temp[400];
 	int sec = millis() / 1000;
 	int min = sec / 60;
@@ -24,11 +29,12 @@ void WebDataClass::handleRoot()
   <body>\
     <h1>Hello from HackerSpace!</h1>\
     <p>Uptime: %02d:%02d:%02d</p>\
-    <img src=\"/test.svg\" />\
+	<p>Temp: %s</p>\
+	<p>Hum: %s</p>\
   </body>\
 </html>",
 
-hr, min % 60, sec % 60
+hr, min % 60, sec % 60, sensor.GetJsonData(), hum.GetJsonData()
 );
 	server->send(200, "text/html", temp);
 }
