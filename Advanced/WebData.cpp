@@ -10,9 +10,10 @@
 void WebDataClass::handleRoot()
 {
 	DS18B20 sensor(D3);
-	//auto val = sensor.ReadTempCelcius();
-	//MyOLED.print(val);
 	DHTData hum;
+
+	auto tempJson = sensor.GetJsonData();
+	auto humJson = hum.GetJsonData();
 	
 	char temp[400];
 	int sec = millis() / 1000;
@@ -37,9 +38,11 @@ void WebDataClass::handleRoot()
   </body>\
 </html>",
 
-hr, min % 60, sec % 60, sensor.GetJsonData(), hum.GetJsonData()
+hr, min % 60, sec % 60, tempJson, humJson
 );
 	server->send(200, "text/html", temp);
+
+	MyOLED.print((char*)humJson);
 }
 
 void WebDataClass::drawGraph()
@@ -86,8 +89,6 @@ bool WebDataClass::check()
 
 void WebDataClass::init()
 {
-	MyOLED.init();
-
 	server = new ESP8266WebServer(80);
 	
 	if (MDNS.begin("esp8266")) {
@@ -99,7 +100,6 @@ void WebDataClass::init()
 	server->onNotFound(std::bind(&WebDataClass::handleNotFound, this));
 	server->begin();
 	Serial.println("> Web: HTTP server started");
-
 }
 
 void WebDataClass::loop()

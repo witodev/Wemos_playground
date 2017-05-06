@@ -470,15 +470,37 @@ void MyOLEDClass::init()
 
 	display->init();
 
-	display->flipScreenVertically();
+	//display->flipScreenVertically();
 
 	display->clear();
 	display->display();
 }
 
-void MyOLEDClass::print(const char * msg)
+void MyOLEDClass::print(char* json)
 {
+	//Serial.print("> OLED: json=");
+	//Serial.println(json);
 
+	display->clear();
+	//display->setFont(ArialMT_Plain_16);
+	//display->drawStringMaxWidth(0, 0, 128, String(json));
+	//display->display();
+
+	StaticJsonBuffer<SENSORDATA_DATA_SIZE> jsonBuffer;
+	JsonObject& root = jsonBuffer.parseObject(json);
+	const char * dev = (const char*)root["dev"].as<const char*>();
+	float temp = root["temp"].as<float>();
+	float hum = root["hum"].as<float>();
+
+	//Serial.print("> OLED: ");
+	//Serial.println(dev);
+	//Serial.println(temp);
+	//Serial.println(hum);
+
+	display->setFont(ArialMT_Plain_24);
+	display->drawString(0, 0, String("T= ") + String(temp));
+	display->drawString(0, 32, String("H= ") + String(hum));
+	display->display();
 }
 
 void MyOLEDClass::print(float temp)
@@ -490,6 +512,14 @@ void MyOLEDClass::print(float temp)
 	Serial.print("> OLED: ");
 	Serial.println(msg);
 	display->drawString(64, 10, msg);
+	display->display();
+}
+
+void MyOLEDClass::print(String msg)
+{	
+	display->clear();
+	display->setFont(ArialMT_Plain_16);
+	display->drawStringMaxWidth(0, 0, 128, msg);
 	display->display();
 }
 
