@@ -18,10 +18,10 @@
     <None Include="OLED_new.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Arduino\libraries\ESP8266_Oled_Driver_for_SSD1306_display\examples\SSD1306SimpleDemo\images.h">
+    <ClInclude Include="__vm\.OLED_new.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="__vm\.OLED_new.vsarduino.h">
+    <ClInclude Include="images.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
