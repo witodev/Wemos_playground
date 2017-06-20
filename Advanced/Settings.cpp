@@ -64,6 +64,8 @@ void SettingsClass::init()
 	mqtt_host = Convert(json["mqtt_host"]);
 	ota_host = Convert(json["ota_host"]);
 	ota_page = Convert(json["ota_page"]);
+	auto php_host = Convert(json["php_host"]);
+	auto php_page = Convert(json["php_page"]);
 
 	ShowConfig("ssid", ssid);
 	ShowConfig("password", password);
@@ -72,6 +74,8 @@ void SettingsClass::init()
 	ShowConfig("mqtt_host", mqtt_host);
 	ShowConfig("ota_host", ota_host);
 	ShowConfig("ota_page", ota_page);
+	ShowConfig("php_host", php_host);
+	ShowConfig("php_page", php_page);
 
 	return;
 }

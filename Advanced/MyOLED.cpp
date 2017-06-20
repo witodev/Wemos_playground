@@ -517,6 +517,9 @@ void MyOLEDClass::print(float temp)
 
 void MyOLEDClass::print(String msg)
 {	
+	Serial.print("> OLED print: ");
+	Serial.println(msg);
+
 	display->clear();
 	display->setFont(ArialMT_Plain_16);
 	display->drawStringMaxWidth(0, 0, 128, msg);

@@ -1,4 +1,5 @@
 
+#include "PHP.h"
 #include "WebData.h"
 //#include "HostWiFi.h"
 #include "Settings.h"
@@ -6,6 +7,8 @@
 #include "OTA.h"
 #include "MQTT.h"
 #include "MyOLED.h"
+
+auto work = PHP;
 
 void setup() 
 {
@@ -15,6 +18,7 @@ void setup()
 	if (Settings.check()) // plik konfiguracji istnieje
 	{
 		Settings.init(); // odczytaj go
+		MyOLED.print(String("Waiting for IP..."));
 		if (Settings.ConnectToWiFi()) // jesli polaczymy sie do sieci
 		{
 			String IP(WiFi.localIP().toString());
@@ -22,28 +26,29 @@ void setup()
 
 			if (OTA.check()) // sprawdz update przez wifi
 			{
+				MyOLED.print(String("OTA init"));
 				OTA.init();
 			}
-			else if (MQTT.check()) // <-- tutaj normalna praca
+			else if (work.check()) // <-- tutaj normalna praca
 			{
-				MyOLED.print("MQTT init");
-				MQTT.init();
+				MyOLED.print(String("WORK init"));
+				work.init();
 			}
 			else // host web server
 			{
-				MyOLED.print("WebData init");
+				MyOLED.print(String("WebData init"));
 				WebData.init();
 			}
 		}
 		else // problem z polaczeniem do sieci wifi, tworzymy wlasna
 		{
-			MyOLED.print("ConfigServer init");
+			MyOLED.print(String("ConfigServer init"));
 			ConfigServer.init();
 		}
 	}
 	else // jesli ustawienia zawioda to postaw server konfiguracyjny
 	{
-		MyOLED.print("ConfigServer init");
+		MyOLED.print(String("ConfigServer init"));
 		ConfigServer.init();
 	}
 }
@@ -56,9 +61,9 @@ void loop()
 		{
 			OTA.init();
 		}
-		else if (MQTT.OK) // <-- tutaj normalna praca
+		else if (work.OK) // <-- tutaj normalna praca
 		{
-			MQTT.loop();
+			work.loop();
 		}
 		else // host web server
 		{
