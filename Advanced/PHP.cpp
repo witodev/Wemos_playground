@@ -57,6 +57,12 @@ void PHPClass::loop()
 		//Serial.print("> PHP host: ");
 		//Serial.println(host);
 
+		String outside("28FF23DB8C160316");
+		if (dev.compareTo(outside) == 0)
+			MyOLED.print(temp);
+		else
+			MyOLED.print(String("Brak zew. czujnika"));
+
 		Serial.print("> PHP url: ");
 		Serial.println(url);
 
@@ -92,7 +98,6 @@ void PHPClass::loop()
 	auto timeToSleep = sleep * 1e6 - micros() + 1400 * 1e3;
 	Serial.print("Sleep time: ");
 	Serial.println(timeToSleep);
-	MyOLED.print(String("Sleep: ") + String(timeToSleep));
 	ESP.deepSleep(timeToSleep);
 }
 
