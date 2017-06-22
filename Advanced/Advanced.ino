@@ -18,25 +18,24 @@ void setup()
 	if (Settings.check()) // plik konfiguracji istnieje
 	{
 		Settings.init(); // odczytaj go
-		MyOLED.print(String("Waiting for IP..."));
+		MyOLED.print(String("Restarting..."));
 		if (Settings.ConnectToWiFi()) // jesli polaczymy sie do sieci
 		{
 			String IP(WiFi.localIP().toString());
-			MyOLED.print(IP);
 
 			if (OTA.check()) // sprawdz update przez wifi
 			{
-				MyOLED.print(String("OTA init"));
+				MyOLED.print(String("OTA init ") + IP);
 				OTA.init();
 			}
 			else if (work.check()) // <-- tutaj normalna praca
 			{
-				MyOLED.print(String("WORK init"));
+				//MyOLED.print(String("WORK init"));
 				work.init();
 			}
 			else // host web server
 			{
-				MyOLED.print(String("WebData init"));
+				MyOLED.print(String("WebData init ") + IP);
 				WebData.init();
 			}
 		}
@@ -59,7 +58,7 @@ void loop()
 	{
 		if (OTA.OK) // update przez wifi
 		{
-			OTA.init();
+			OTA.loop();
 		}
 		else if (work.OK) // <-- tutaj normalna praca
 		{

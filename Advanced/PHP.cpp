@@ -60,9 +60,7 @@ void PHPClass::loop()
 		String outside("28FF23DB8C160316");
 		if (dev.compareTo(outside) == 0)
 			MyOLED.print(temp);
-		else
-			MyOLED.print(String("Brak zew. czujnika"));
-
+		
 		Serial.print("> PHP url: ");
 		Serial.println(url);
 
