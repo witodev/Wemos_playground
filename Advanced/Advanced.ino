@@ -18,7 +18,7 @@ void setup()
 	if (Settings.check()) // plik konfiguracji istnieje
 	{
 		Settings.init(); // odczytaj go
-		MyOLED.print(String("Restarting..."));
+		//MyOLED.print(String("Restarting..."));
 		if (Settings.ConnectToWiFi()) // jesli polaczymy sie do sieci
 		{
 			String IP(WiFi.localIP().toString());
