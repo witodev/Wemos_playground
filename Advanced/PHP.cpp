@@ -31,7 +31,6 @@ void PHPClass::loop()
 	const char* host = Settings["php_host"];
 	const int httpPort = 80;
 
-
 	// We now create a URI for the request
 	DS18B20 sensor(D3);
 	auto json = sensor.GetJsonData();
@@ -60,7 +59,7 @@ void PHPClass::loop()
 		String outside("28FF23DB8C160316");
 		if (dev.compareTo(outside) == 0)
 			MyOLED.print(temp);
-		
+
 		Serial.print("> PHP url: ");
 		Serial.println(url);
 
@@ -88,6 +87,21 @@ void PHPClass::loop()
 		json = sensor.GetJsonData();
 	}
 
+	DHTData hum;
+	json = (char*)hum.GetJsonData();
+
+	if (json != NULL)
+	{
+		StaticJsonBuffer<(JSON_OBJECT_SIZE(3))> jsonBuffer;
+		JsonObject& root = jsonBuffer.parseObject(json);
+		auto hdev = root["dev"];
+		auto htemp = (float)root["temp"];
+		auto hhum = (float)root["hum"];
+
+		SendToServer("Htemp", htemp);
+		SendToServer("Hhum", hhum);
+	}
+
 	int sleep = 60;
 
 	if (sleep == 0)
@@ -99,6 +113,45 @@ void PHPClass::loop()
 	ESP.deepSleep(timeToSleep);
 }
 
+bool PHPClass::SendToServer(String dev, float temp)
+{
+	Serial.println("> PHP send to server");
+
+	const char* host = Settings["php_host"];
+	const int httpPort = 80;
+
+	// Use WiFiClient class to create TCP connections
+	WiFiClient client;
+	if (!client.connect(host, httpPort)) {
+		Serial.println("> PHP connection failed");
+		return false;
+	}
+
+	String url = "/" + String(Settings["php_page"]) + String("?dev=") + dev + String("&temp=") + String(temp);
+	
+	// This will send the request to the server
+	client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+		"Host: " + host + "\r\n" +
+		"Connection: close\r\n\r\n");
+
+	unsigned long timeout = millis();
+	while (client.available() == 0) {
+		if (millis() - timeout > 5000) {
+			Serial.println("> Client Timeout !");
+			client.stop();
+			return false;
+		}
+	}
+
+	// Read all the lines of the reply from server and print them to Serial
+	String line = "";
+	while (client.available()) {
+		line = client.readStringUntil('\r');
+		//Serial.println(line);
+	}
+	client.stop();
+	return true;
+}
 
 PHPClass PHP;
 

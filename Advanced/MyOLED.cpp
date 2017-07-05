@@ -472,8 +472,8 @@ void MyOLEDClass::init()
 
 	//display->flipScreenVertically();
 
-	display->clear();
-	display->display();
+	//display->clear();
+	//display->display();
 }
 
 void MyOLEDClass::print(char* json)
@@ -505,6 +505,7 @@ void MyOLEDClass::print(char* json)
 
 void MyOLEDClass::print(float temp)
 {
+	display->resetDisplay();
 	display->clear();
 	display->setFont(SansSerif_plain_35);
 	display->setTextAlignment(TEXT_ALIGN_CENTER);
@@ -516,7 +517,8 @@ void MyOLEDClass::print(float temp)
 }
 
 void MyOLEDClass::print(String msg)
-{	
+{
+	display->resetDisplay();
 	Serial.print("> OLED print: ");
 	Serial.println(msg);
 

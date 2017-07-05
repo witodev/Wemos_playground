@@ -13,10 +13,12 @@
 #include <ESP8266WiFi.h>
 #include "Settings.h"
 #include "DS18B20.h"
+#include "DHTData.h"
 #include "MyOLED.h"
 
 class PHPClass: public Base
 {
+	bool SendToServer(String dev, float temp);
  public:
 	 bool check();
 	 void init();
